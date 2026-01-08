@@ -1,6 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { generateDatedSlug } from "../utils/slug";
+import { generateDatedSlug, getTitleSlug } from "../utils/slug";
 
 export default function PostPage() {
   const { slug } = useParams();
@@ -18,7 +18,7 @@ export default function PostPage() {
       for (const [path, resolver] of Object.entries(modules)) {
         const mod = await resolver();
         const m = mod.meta || {};
-        const s = generateDatedSlug(m);
+        const s = getTitleSlug(m);
         entries.push({ slug: s, meta: m, component: mod.default });
       }
 
@@ -27,7 +27,9 @@ export default function PostPage() {
         (b.meta.date || "").localeCompare(a.meta.date || "")
       );
 
-      const index = entries.findIndex((e) => e.slug === slug);
+      const index = entries.findIndex((e) => {
+        return e.slug === slug;
+      });
       if (index !== -1) {
         const current = entries[index];
         setPost(() => current.component);
@@ -52,7 +54,10 @@ export default function PostPage() {
       {/* Navigation */}
       <div className="flex justify-between mt-12 pt-6 border-t text-blue-600">
         {prevPost ? (
-          <Link to={`/posts/${prevPost.slug}`} className="hover:underline">
+          <Link
+            to={`/posts/${generateDatedSlug(prevPost.meta)}`}
+            className="hover:underline"
+          >
             ← {prevPost.meta.title}
           </Link>
         ) : (
@@ -60,7 +65,10 @@ export default function PostPage() {
         )}
 
         {nextPost ? (
-          <Link to={`/posts/${nextPost.slug}`} className="hover:underline">
+          <Link
+            to={`/posts/${generateDatedSlug(nextPost.meta)}`}
+            className="hover:underline"
+          >
             {nextPost.meta.title} →
           </Link>
         ) : (
