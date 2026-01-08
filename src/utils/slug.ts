@@ -7,3 +7,11 @@ export function generateDatedSlug(meta) {
     .replace(/^-+|-+$/g, "");
   return `${datePath}/${titleSlug}`;
 }
+
+export function getTitleSlug(meta) {
+  if (!meta || !meta.title) return "";
+  return meta.title
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "");
+}
