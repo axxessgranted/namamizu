@@ -44,12 +44,16 @@ export default function PostPage() {
   if (!Post) return <p>Loading...</p>;
 
   return (
-    <div className="max-w-3xl mx-auto">
-      <h1 className="text-4xl font-bold mb-2">{meta.title}</h1>
-      <p className="text-sm text-gray-500 mb-4">{meta.date}</p>
-      {meta.image && <img src={meta.image} className="rounded-xl mb-6" />}
+    <article className="max-w-3xl mx-auto">
+      <header className="mb-8">
+        <h1 className="text-4xl font-bold mb-2">{meta.title}</h1>
+        <p className="text-sm text-gray-500 mb-4">{meta.date}</p>
+      </header>
+      {meta.image && <img src={meta.image} className="rounded-2xl mb-10" />}
 
-      <Post />
+      <div className="prose prose-lg max-w-none">
+        <Post />
+      </div>
 
       {/* Navigation */}
       <div className="flex justify-between mt-12 pt-6 border-t text-blue-600">
@@ -75,6 +79,6 @@ export default function PostPage() {
           <div />
         )}
       </div>
-    </div>
+    </article>
   );
 }
