@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { generateDatedSlug, getTitleSlug } from "../utils/slug";
 
 import ReadingProgress from "../components/ReadingProgress";
+import { mdxComponents } from "../utils/mdx-components";
 
 export default function PostPage() {
   const { slug } = useParams();
@@ -56,7 +57,7 @@ export default function PostPage() {
         {meta.image && <img src={meta.image} className="rounded-2xl mb-10" />}
 
         <div className="prose prose-lg max-w-none">
-          <Post />
+          <Post components={mdxComponents} />
         </div>
 
         {/* Navigation */}
